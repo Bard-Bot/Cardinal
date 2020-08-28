@@ -8,7 +8,7 @@ def _prefix_callable(bot, msg):
     user_id = bot.user.id
     base = [f'<@!{user_id}> ',
             f'<@{user_id}> ',
-            environ.get('prefix', '::'),
+            environ.get('PREFIX', '::'),
             'bard::',
             ]
 
@@ -26,6 +26,6 @@ class Cardinal(commands.Bot):
     async def on_ready(self):
         await self.change_presence(
             activity=discord.Game(
-                name=f"{environ.get('prefix', '::')}help | 読み上げBot"
+                name=f"{environ.get('PREFIX', '::')}help | 読み上げBot"
             )
         )
