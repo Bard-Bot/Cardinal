@@ -1,10 +1,11 @@
+from __future__ import annotations
 from discord.ext import commands
 from os import environ
 import discord
 import asyncio
 
 
-def _prefix_callable(bot, msg):
+def _prefix_callable(bot: Cardinal, msg: discord.Message) -> list:
     user_id = bot.user.id
     base = [f'<@!{user_id}> ',
             f'<@{user_id}> ',
@@ -23,7 +24,7 @@ class Cardinal(commands.Bot):
             loop=asyncio.get_event_loop()
         )
 
-    async def on_ready(self):
+    async def on_ready(self) -> None:
         await self.change_presence(
             activity=discord.Game(
                 name=f"{environ.get('PREFIX', '::')}help | 読み上げBot"
