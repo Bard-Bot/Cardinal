@@ -5,7 +5,7 @@ import discord
 import asyncio
 
 
-def _prefix_callable(bot: Cardinal, _) -> list:
+def _prefix_callable(bot: Cardinal, msg: discord.Message) -> list:
     user_id = bot.user.id
     base = [f'<@!{user_id}> ',
             f'<@{user_id}> ',

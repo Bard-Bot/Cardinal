@@ -1,10 +1,11 @@
 from bot import Cardinal
 from os import environ
+from typing import List
 
 bot = Cardinal()
 
 
-extensions = [
+extensions: List[str] = [
 
 ]
 
