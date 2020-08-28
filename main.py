@@ -20,7 +20,7 @@ for extension in extensions:
 
 
 try:
-    bot.run(environ['DISCORD_TOKEN'])
+    bot.run(environ['BOT_TOKEN'])
 except RuntimeError as e:
     # TODO: sentry_sdk
     pass
