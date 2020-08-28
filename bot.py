@@ -23,6 +23,7 @@ class Cardinal(commands.Bot):
             help_command=None,
             loop=asyncio.get_event_loop()
         )
+        self.joined_bard_bots = []
 
     async def on_ready(self) -> None:
         await self.change_presence(
