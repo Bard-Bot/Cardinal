@@ -24,10 +24,10 @@ class BardCheck(commands.Cog):
             return
         if before.channel is None and after.channel is not None:
             # 入った時
-            self.bot.joined_bard_bots.append(member.id)
+            self.bot.joined_bard_bots[member.guild.id].append(member.id)
         if member.id in self.bot.joined_bard_bots:
             if before.channel is not None and after.channel is None:
-                self.bot.joined_bard_bots.remove(member.id)
+                self.bot.joined_bard_bots[member.guild.id].remove(member.id)
 
 
 def setup(bot: 'Cardinal') -> None:
