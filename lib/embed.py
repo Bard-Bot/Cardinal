@@ -1,51 +1,41 @@
 from discord import Embed
+from discord.ext import commands
+from typing import Dict, Any, Optional
 
 
-class Error(Embed):
-    def __init__(self, **kwargs) -> None:
+class TimestampEmbed(Embed):
+    def __init__(self, **kwargs: Dict[str, Any]) -> None:
         super().__init__(**kwargs)
-        ctx = kwargs.pop('ctx', None)
+        ctx: Optional[commands.Context] = kwargs.pop('ctx', None)
         if ctx is not None:
             self.timestamp = ctx.message.created_at
 
+
+class Error(TimestampEmbed):
+    def __init__(self, **kwargs: Dict[str, Any]) -> None:
+        super().__init__(**kwargs)
         self.color = 0xFF5252
 
 
-class Success(Embed):
-    def __init__(self, **kwargs) -> None:
+class Success(TimestampEmbed):
+    def __init__(self, **kwargs: Dict[str, Any]) -> None:
         super().__init__(**kwargs)
-        ctx = kwargs.pop('ctx', None)
-        if ctx is not None:
-            self.timestamp = ctx.message.created_at
-
         self.color = 0x4CAF50
 
 
-class Default(Embed):
-    def __init__(self, **kwargs) -> None:
+class Default(TimestampEmbed):
+    def __init__(self, **kwargs: Dict[str, Any]) -> None:
         super().__init__(**kwargs)
-        ctx = kwargs.pop('ctx', None)
-        if ctx is not None:
-            self.timestamp = ctx.message.created_at
-
         self.color = 0x197fd2
 
 
-class Admin(Embed):
-    def __init__(self, **kwargs) -> None:
+class Admin(TimestampEmbed):
+    def __init__(self, **kwargs: Dict[str, Any]) -> None:
         super().__init__(**kwargs)
-        ctx = kwargs.pop('ctx', None)
-        if ctx is not None:
-            self.timestamp = ctx.message.created_at
-
         self.color = 0xFFC107
 
 
-class Notice(Embed):
-    def __init__(self, **kwargs):
+class Notice(TimestampEmbed):
+    def __init__(self, **kwargs: Dict[str, Any]) -> None:
         super().__init__(**kwargs)
-        ctx = kwargs.pop('ctx', None)
-        if ctx is not None:
-            self.timestamp = ctx.message.created_at
-
         self.color = 0xFFC107
