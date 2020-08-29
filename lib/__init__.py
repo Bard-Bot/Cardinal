@@ -1,4 +1,5 @@
-from lib.embed import Success, Error, Notice, Admin, Default  # noqa
+# mypy: ignore-errors
+from .embed import Success, Error, Notice, Admin, Default  # noqa
 
 BARD_BOTS = [
     727687910643466271,

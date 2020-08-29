@@ -2,7 +2,7 @@ from discord import Embed
 
 
 class Error(Embed):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         ctx = kwargs.pop('ctx', None)
         if ctx is not None:
@@ -12,7 +12,7 @@ class Error(Embed):
 
 
 class Success(Embed):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         ctx = kwargs.pop('ctx', None)
         if ctx is not None:
@@ -22,7 +22,7 @@ class Success(Embed):
 
 
 class Default(Embed):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         ctx = kwargs.pop('ctx', None)
         if ctx is not None:
@@ -32,7 +32,7 @@ class Default(Embed):
 
 
 class Admin(Embed):
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
         ctx = kwargs.pop('ctx', None)
         if ctx is not None:
