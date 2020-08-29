@@ -1,17 +1,12 @@
 from discord.ext import commands
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
+from lib import BARD_BOTS
 import discord
 
 
 if TYPE_CHECKING:
     from bot import Cardinal
-
-
-BARD_BOTS = [
-    727687910643466271,
-    739831545283477525,
-]
 
 
 @dataclass
