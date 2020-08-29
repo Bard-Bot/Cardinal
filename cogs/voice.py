@@ -42,6 +42,12 @@ class Voice(commands.Cog):
         if voice_client.channel.id != voice.channel.id:
             return
 
+    @commands.command()
+    async def move(self, ctx: commands.Context, member: discord.Member) -> None:
+        """メンバーが自分であれば行う"""
+        if member.id != self.bot.user.id:
+            return
+
 
 def setup(bot: 'Cardinal') -> None:
     return bot.add_cog(Voice(bot))
