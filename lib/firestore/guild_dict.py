@@ -1,14 +1,20 @@
-from functools import partial
+# mypy: ignore-errors
+from __future__ import annotations
+from google.cloud.firestore_v1 import AsyncDocumentReference
+from typing import Dict, TYPE_CHECKING, Union, Any
+
+if TYPE_CHECKING:
+    from lib import FireStore
 
 
 class GuildDictSnapshot:
-    def __init__(self, document, guild_dict):
+    def __init__(self, document: AsyncDocumentReference, guild_dict: GuildDict) -> None:
         self.document = document
         self.executor = guild_dict.executor
         self.guild_dict = guild_dict
         self.bot = guild_dict.bot
 
-    async def data(self):
+    async def data(self) -> Dict[str, str]:
         result = await self.document.get()
         d = result.to_dict()
         if d is None:
@@ -17,15 +23,15 @@ class GuildDictSnapshot:
 
         return d
 
-    async def exists(self):
+    async def exists(self) -> bool:
         result = await self.document.get()
 
         return result.exists
 
-    async def add(self, key, value):
+    async def add(self, key: str, value: str) -> None:
         await self.document.set({key: value}, merge=True)
 
-    async def remove(self, key):
+    async def remove(self, key: str) -> Any:
         base_data = await self.data()
         if key not in base_data.keys():
             return False
@@ -35,12 +41,12 @@ class GuildDictSnapshot:
 
 
 class GuildDict:
-    def __init__(self, firestore):
+    def __init__(self, firestore: 'FireStore'):
         self.bot = firestore.bot
         self.firestore = firestore
         self.db = firestore.db
         self.executor = firestore.executor
         self.collection = self.db.collection('guild_dict')
 
-    def get(self, guild_id):
+    def get(self, guild_id: Union[int, str]) -> GuildDictSnapshot:
         return GuildDictSnapshot(self.collection.document(str(guild_id)), self)

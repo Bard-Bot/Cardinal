@@ -5,10 +5,15 @@ from .user_setting import UserSetting
 from google.cloud.firestore import AsyncClient
 import google.auth
 import concurrent.futures
+from typing import TYPE_CHECKING
+
+
+if TYPE_CHECKING:
+    from bot import Cardinal
 
 
 class FireStore:
-    def __init__(self, bot):
+    def __init__(self, bot: 'Cardinal') -> None:
         """
         プランと残り文字数、プランへお金を出した人を保存する
         :param bot: discord.ext.commands.Bot

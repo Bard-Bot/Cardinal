@@ -1,31 +1,36 @@
-from functools import partial
+# mypy: ignore-errors
+from __future__ import annotations
+from google.cloud.firestore_v1 import AsyncDocumentReference
+from typing import Dict, TYPE_CHECKING, Union, Optional, Any
+
+if TYPE_CHECKING:
+    from lib import FireStore
 
 
 class UserSettingData:
-    def __init__(self, data):
+    def __init__(self, data: Dict[str, Any]) -> None:
         self.data = data
 
     @property
-    def voice(self):
+    def voice(self) -> str:
         return self.data['voice']
 
     @property
-    def pitch(self):
+    def pitch(self) -> Union[int, float]:
         return self.data['pitch']
 
     @property
-    def speed(self):
+    def speed(self) -> Union[int, float]:
         return self.data['speed']
 
 
 class UserSettingSnapshot:
-    def __init__(self, document, user_setting):
+    def __init__(self, document: AsyncDocumentReference, user_setting: UserSetting) -> None:
         self.document = document
         self.setting = user_setting
-        self.executor = user_setting.executor
         self.bot = user_setting.bot
 
-    async def data(self):
+    async def data(self) -> Optional[UserSettingData]:
         result = await self.document.get()
         d = result.to_dict()
         if d is None:
@@ -33,12 +38,12 @@ class UserSettingSnapshot:
 
         return UserSettingData(d)
 
-    async def exists(self):
+    async def exists(self) -> bool:
         result = await self.document.get()
 
         return result.exists
 
-    async def create(self):
+    async def create(self) -> Optional[UserSettingData]:
         if await self.exists():
             return
         payload = dict(
@@ -50,7 +55,10 @@ class UserSettingSnapshot:
         await self.document.set(payload)
         return UserSettingData(payload)
 
-    async def edit(self, voice=None, pitch=None, speed=None):
+    async def edit(self,
+                   voice: Optional[str] = None,
+                   pitch: Optional[Union[int, float]] = None,
+                   speed: Optional[Union[int, float]] = None) -> None:
         base = await self.data()
         voice = base.voice if voice is None else voice
         pitch = base.pitch if pitch is None else pitch
@@ -62,12 +70,11 @@ class UserSettingSnapshot:
 
 
 class UserSetting:
-    def __init__(self, firestore):
+    def __init__(self, firestore: 'FireStore') -> None:
         self.bot = firestore.bot
         self.firestore = firestore
         self.db = firestore.db
-        self.executor = firestore.executor
         self.collection = self.db.collection('user_setting')
 
-    def get(self, guild_id):
+    def get(self, guild_id: Union[int, str]) -> UserSettingSnapshot:
         return UserSettingSnapshot(self.collection.document(str(guild_id)), self)
