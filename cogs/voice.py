@@ -1,6 +1,6 @@
 from discord.ext import commands
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from lib import BARD_BOTS
 import discord
 
@@ -30,6 +30,17 @@ class Voice(commands.Cog):
 
         async with ctx.channel.typing():
             pass
+
+    @commands.command()
+    async def leave(self, ctx: commands.Context) -> None:
+        voice: discord.VoiceState = ctx.author.voice
+        if voice.channel is None:
+            return
+        voice_client: Optional[discord.VoiceClient] = ctx.guild.voice_client
+        if not voice_client:
+            return
+        if voice_client.channel.id != voice.channel.id:
+            return
 
 
 def setup(bot: 'Cardinal') -> None:
