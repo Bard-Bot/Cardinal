@@ -1,4 +1,4 @@
-from lib.embed import Success, Error, Notice, Admin, Default
+from lib.embed import Success, Error, Notice, Admin, Default  # noqa
 
 BARD_BOTS = [
     727687910643466271,
